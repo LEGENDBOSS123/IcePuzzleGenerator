@@ -54,7 +54,7 @@ function generateMap() {
     let grayFixture = Fixture.fromJSON(gray_fixture);
     let grayShape = Polygon.fromJSON(gray_shape);
     let boxSize = 450 / config.SIZE;
-    let scale = 0.99 / config.SIZE;
+    let scale = (boxSize - 1) / 450;
     let generatedPuzzle = generatePuzzle({
         size: config.SIZE,
         minMoves: config.MIN_MOVES,

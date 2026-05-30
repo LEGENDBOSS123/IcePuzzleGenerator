@@ -8,6 +8,7 @@ bundle.min.js
 bundle.min.js.map
 bundle.min.mjs
 bundle.min.mjs.map
+temp.mjs
 
 # Optional npm cache and logs
 npm-debug.log

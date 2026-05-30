@@ -3,7 +3,7 @@ export const icePuzzleMap = {
     "s": {
         "re": false,
         "nc": true,
-        "pq": 2,
+        "pq": 1,
         "gd": 25,
         "fl": true
     },
@@ -222,6 +222,17 @@ export const icePuzzleMap = {
                 "type": "bx",
                 "w": 300,
                 "h": 300,
+                "c": [
+                    0,
+                    0
+                ],
+                "a": 0,
+                "sk": false
+            },
+            {
+                "type": "bx",
+                "w": 450,
+                "h": 450,
                 "c": [
                     0,
                     0
@@ -489,6 +500,19 @@ export const icePuzzleMap = {
                 "d": false,
                 "np": false,
                 "ng": true,
+                "ig": false
+            },
+            {
+                "sh": 20,
+                "n": "Unnamed Shape",
+                "fr": null,
+                "fp": null,
+                "re": null,
+                "de": null,
+                "f": 14079702,
+                "d": false,
+                "np": false,
+                "ng": false,
                 "ig": false
             }
         ],
@@ -1248,6 +1272,53 @@ export const icePuzzleMap = {
                     "t": 0,
                     "cf": 0
                 }
+            },
+            {
+                "type": "s",
+                "n": "FZ",
+                "p": [
+                    0,
+                    0
+                ],
+                "a": 0,
+                "fric": 0.5,
+                "fricp": false,
+                "re": -1,
+                "de": 0.3,
+                "lv": [
+                    0,
+                    0
+                ],
+                "av": 0,
+                "ld": 0,
+                "ad": 0,
+                "fr": false,
+                "bu": false,
+                "cf": {
+                    "x": 0,
+                    "y": 0,
+                    "w": true,
+                    "ct": 0
+                },
+                "fx": [
+                    20
+                ],
+                "f_c": 1,
+                "f_p": true,
+                "f_1": false,
+                "f_2": false,
+                "f_3": false,
+                "f_4": false,
+                "fz": {
+                    "on": true,
+                    "x": 0,
+                    "y": -20,
+                    "d": true,
+                    "p": true,
+                    "a": true,
+                    "t": 0,
+                    "cf": 0
+                }
             }
         ],
         "bro": [
@@ -1258,6 +1329,7 @@ export const icePuzzleMap = {
             12,
             2,
             0,
+            16,
             3,
             11,
             8,
@@ -1461,7 +1533,7 @@ export const icePuzzleMap = {
         "cr": [
             "LEGENDBOSS123"
         ],
-        "pub": false,
+        "pub": true,
         "mo": "",
         "vu": 0,
         "vd": 0
