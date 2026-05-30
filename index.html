@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ice Puzzle Generator</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" />
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f2f4f7;
+            --bg-accent: #e8edf3;
+            --card: #ffffff;
+            --text: #1d1f23;
+            --muted: #58606a;
+            --border: #d7dce2;
+            --accent: #1f6feb;
+            --accent-dark: #1858be;
+            --shadow: 0 12px 30px rgba(23, 27, 33, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "IBM Plex Sans", "Noto Sans", sans-serif;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg-accent) 100%);
+            color: var(--text);
+        }
+
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 32px 20px 48px;
+        }
+
+        header {
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            animation: rise 240ms ease-out;
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px 16px;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: 2px solid rgba(31, 111, 235, 0.25);
+            border-color: var(--accent);
+        }
+
+        .hint {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .primary {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .primary:hover {
+            background: var(--accent-dark);
+        }
+
+        .secondary {
+            background: #eef2f6;
+            color: #1f2a37;
+        }
+
+        .output {
+            margin-top: 18px;
+            display: grid;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 13px;
+            font-family: "IBM Plex Sans", "Noto Sans", sans-serif;
+            resize: vertical;
+        }
+
+        .error {
+            color: #b42318;
+            font-size: 13px;
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <h1>Ice Puzzle Generator</h1>
+            <p>Fill in the config values, click Generate, then copy the command.</p>
+        </header>
+
+        <section class="card">
+            <form id="config-form">
+                <div class="grid">
+                    <label>
+                        Map name
+                        <input id="map-name" type="text" value="Ice Puzzle 1" required />
+                    </label>
+                    <label>
+                        Map author
+                        <input id="map-author" type="text" value="LEGENDBOSS123" required />
+                    </label>
+                    <label>
+                        Size
+                        <input id="size" type="number" min="3" step="1" required />
+                    </label>
+                    <label>
+                        Min moves
+                        <input id="min-moves" type="number" min="1" step="1" required />
+                    </label>
+                    <label>
+                        Max moves
+                        <input id="max-moves" type="number" min="1" step="1" />
+                        <span class="hint">Leave blank for auto.</span>
+                    </label>
+                    <label>
+                        Seed
+                        <input id="seed" type="number" min="0" step="1" />
+                        <span class="hint">Leave blank for random.</span>
+                    </label>
+                    <label>
+                        Max attempts
+                        <input id="max-attempts" type="number" min="1" step="1" required />
+                    </label>
+                </div>
+
+                <div class="actions">
+                    <button class="primary" type="submit">Generate</button>
+                    <button class="secondary" type="button" id="copy">Copy command</button>
+                </div>
+                <div id="error" class="error" role="alert"></div>
+            </form>
+
+            <div class="output">
+                <div class="muted">Output command</div>
+                <textarea id="output" spellcheck="false"></textarea>
+            </div>
+        </section>
+    </div>
+
+        <script src="./bundle.min.js"></script>
+        <script>
+            const form = document.getElementById("config-form");
+            const output = document.getElementById("output");
+            const error = document.getElementById("error");
+            const copyButton = document.getElementById("copy");
+
+            const api = window.IcePuzzleGenerator;
+            if (!api) {
+                error.textContent = "bundle.min.js not loaded. Run npm run build first.";
+            }
+
+            const { generateMap, getConfig, setConfig } = api ?? {};
+
+        const fields = {
+            mapName: document.getElementById("map-name"),
+            mapAuthor: document.getElementById("map-author"),
+            size: document.getElementById("size"),
+            minMoves: document.getElementById("min-moves"),
+            maxMoves: document.getElementById("max-moves"),
+            seed: document.getElementById("seed"),
+            maxAttempts: document.getElementById("max-attempts"),
+        };
+
+        function setFieldValues(config) {
+            fields.mapName.value = config.MAP_NAME ?? "";
+            fields.mapAuthor.value = config.MAP_AUTHOR ?? "";
+            fields.size.value = config.SIZE ?? "";
+            fields.minMoves.value = config.MIN_MOVES ?? "";
+            fields.maxMoves.value = config.MAX_MOVES ?? "";
+            fields.seed.value = config.SEED ?? "";
+            fields.maxAttempts.value = config.MAX_ATTEMPTS ?? "";
+        }
+
+        function parseOptionalInt(value) {
+            if (value === "") return null;
+            const parsed = Number.parseInt(value, 10);
+            return Number.isFinite(parsed) ? parsed : null;
+        }
+
+        function parseRequiredInt(value, label) {
+            const parsed = Number.parseInt(value, 10);
+            if (!Number.isFinite(parsed)) {
+                throw new Error(`${label} must be a number.`);
+            }
+            return parsed;
+        }
+
+        function buildConfig() {
+            const size = parseRequiredInt(fields.size.value, "Size");
+            const minMoves = parseRequiredInt(fields.minMoves.value, "Min moves");
+            const maxMoves = parseOptionalInt(fields.maxMoves.value);
+            const seed = parseOptionalInt(fields.seed.value);
+            const maxAttempts = parseRequiredInt(fields.maxAttempts.value, "Max attempts");
+
+            if (maxMoves !== null && minMoves > maxMoves) {
+                throw new Error("Min moves cannot exceed max moves.");
+            }
+
+            return {
+                MAP_NAME: fields.mapName.value.trim() || "Ice Puzzle",
+                MAP_AUTHOR: fields.mapAuthor.value.trim() || "Unknown",
+                SIZE: size,
+                MIN_MOVES: minMoves,
+                MAX_MOVES: maxMoves,
+                SEED: seed,
+                MAX_ATTEMPTS: maxAttempts,
+            };
+        }
+
+        function renderOutput(mapJson) {
+            const command = `/eval loadMap(${JSON.stringify(mapJson)})`;
+            output.value = command;
+        }
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            error.textContent = "";
+
+                if (!generateMap || !setConfig) {
+                    error.textContent = "bundle.min.js not loaded. Run npm run build first.";
+                    return;
+                }
+
+            try {
+                const newConfig = buildConfig();
+                setConfig(newConfig);
+                const mapJson = generateMap();
+                renderOutput(mapJson);
+            } catch (err) {
+                error.textContent = err?.message ?? "Failed to generate map.";
+            }
+        });
+
+        copyButton.addEventListener("click", async () => {
+            if (!output.value) return;
+            try {
+                await navigator.clipboard.writeText(output.value);
+            } catch (err) {
+                error.textContent = "Copy failed. Select the text and copy manually.";
+            }
+        });
+
+            if (getConfig) {
+                setFieldValues(getConfig());
+            }
+    </script>
+</body>
+
+</html>
