@@ -228,19 +228,13 @@
         </section>
     </div>
 
-        <script src="./bundle.min.js"></script>
-        <script>
-            const form = document.getElementById("config-form");
-            const output = document.getElementById("output");
-            const error = document.getElementById("error");
-            const copyButton = document.getElementById("copy");
+    <script type="module">
+        import { generateMap, getConfig, setConfig } from "./main.mjs";
 
-            const api = window.IcePuzzleGenerator;
-            if (!api) {
-                error.textContent = "bundle.min.js not loaded. Run npm run build first.";
-            }
-
-            const { generateMap, getConfig, setConfig } = api ?? {};
+        const form = document.getElementById("config-form");
+        const output = document.getElementById("output");
+        const error = document.getElementById("error");
+        const copyButton = document.getElementById("copy");
 
         const fields = {
             mapName: document.getElementById("map-name"),
@@ -307,11 +301,6 @@
             event.preventDefault();
             error.textContent = "";
 
-                if (!generateMap || !setConfig) {
-                    error.textContent = "bundle.min.js not loaded. Run npm run build first.";
-                    return;
-                }
-
             try {
                 const newConfig = buildConfig();
                 setConfig(newConfig);
@@ -331,9 +320,7 @@
             }
         });
 
-            if (getConfig) {
-                setFieldValues(getConfig());
-            }
+        setFieldValues(getConfig());
     </script>
 </body>
 
