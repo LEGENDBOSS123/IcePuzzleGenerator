@@ -8,7 +8,7 @@ export const green_body = {
     "a": 0,
     "fric": 0,
     "fricp": false,
-    "re": -1,
+    "re": 1.02,
     "de": 0.1,
     "lv": [
         0,
