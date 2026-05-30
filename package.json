@@ -1,0 +1,18 @@
+{
+    "name": "ice-puzzle-generator",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "esbuild main.mjs --bundle --minify --format=iife --global-name=IcePuzzleGenerator --outfile=bundle.min.js",
+        "build:node": "esbuild main.mjs --bundle --minify --platform=node --format=esm --outfile=bundle.min.mjs",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "esbuild": "^0.28.0"
+    }
+}
