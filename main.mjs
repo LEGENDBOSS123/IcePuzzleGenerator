@@ -78,6 +78,8 @@ function generateMap() {
                         b.position.x = x;
                         b.position.y = y;
                         b.name = generatedPuzzle.solution.map(y => y[0]).join("");
+                        map.physics.shapes[b.fixtureIndices[0]].width = boxSize * 0.75;
+                        map.physics.shapes[b.fixtureIndices[0]].height = boxSize * 0.75;
                         break;
                     }
                 }
